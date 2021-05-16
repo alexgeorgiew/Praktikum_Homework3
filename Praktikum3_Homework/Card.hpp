@@ -14,7 +14,12 @@
 class Card {
 public:
 	Card() = default;
-	Card(std::string input_name, std::string input_effect);
+	Card(std::string input_name, std::string input_effect,unsigned int rariry);
+	virtual bool operator>(const Card& input)const = 0;
+	virtual bool operator<(const Card& input)const = 0;
+	unsigned int getRarity()const;
+
 protected:
 	std::string name, effect;
+	unsigned int rarity;
 };

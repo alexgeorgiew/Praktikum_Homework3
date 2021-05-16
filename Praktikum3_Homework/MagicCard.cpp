@@ -11,7 +11,7 @@
 */
 #include "MagicCard.hpp"
 #include <iostream>
-MagicCard::MagicCard(std::string input_name, std::string input_effect, CardType input_type):Card(input_name, input_effect)
+MagicCard::MagicCard(std::string input_name, std::string input_effect,unsigned int input_rarity, CardType input_type):Card(input_name, input_effect,input_rarity)
 {
 	this->type = input_type;
 }
@@ -68,4 +68,21 @@ std::ifstream& operator>>(std::ifstream& fin, MagicCard& card)
     card.setType(info[2]);
 
 	return fin;
+}
+
+bool MagicCard::operator>(const Card& input)const
+{
+    if (this->rarity > input.getRarity())
+    {
+        return true;
+    }
+    return false;
+}
+bool MagicCard::operator<(const Card& input)const
+{
+    if (this->rarity < input.getRarity())
+    {
+        return true;
+    }
+    return false;
 }

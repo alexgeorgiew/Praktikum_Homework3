@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Duelist.hpp"
 int main()
-{
+{  /*
    /* MonsterCard dragon("Blue-Eyes White Dragon", "This legendary dragon is a powerful engine ofdestruction.", 3000, 2500);
     MonsterCard magician("Dark Magician", "The ultimate wizard.", 2500, 2100);
     MagicCard swords("Swords of Revealing Light", "Your opponent's monsters cannot declare anattack.", CardType::SPELL);
@@ -15,13 +15,14 @@ int main()
     firstDuelist.getDeck().addMagicCard(cylinder);
     firstDuelist.getDeck().addPendulumCard(timegazer);
     firstDuelist.saveDeck("magician_deck.txt");*/
+    /*
     Duelist firstDuelist("Ivan Ivanov");
     if(firstDuelist.loadDeck("magician_deck.txt"))std::cout<<"sirennnnnn";
     firstDuelist.display();
     MagicCard box("Mystic Box", "Destroy one monster.", CardType::SPELL);
     firstDuelist.getDeck().setMagicCard(1, box);
     std::cout << "////////////////////";
-    firstDuelist.display();
+    firstDuelist.display();*/
 
 }
 

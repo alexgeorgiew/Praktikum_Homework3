@@ -11,8 +11,8 @@
 */
 #include "Pendulum.hpp"
 
-PendulumCard::PendulumCard(std::string input_name, std::string input_effect, unsigned int input_attack, unsigned int input_defense, unsigned int input_pendulumScale, CardType input_type)
-	:Card(input_name, input_effect),MagicCard(input_name, input_effect, input_type),MonsterCard(input_name, input_effect, input_attack, input_defense)
+PendulumCard::PendulumCard(std::string input_name, std::string input_effect, unsigned int input_rarity, unsigned int input_attack, unsigned int input_defense, unsigned int input_pendulumScale, CardType input_type)
+	:Card(input_name, input_effect, input_attack),MagicCard(input_name, input_effect, input_attack, input_type),MonsterCard(input_name, input_effect, input_attack, input_attack, input_defense)
 {
 	this->pendulumScale = input_pendulumScale;
 }
@@ -71,6 +71,24 @@ void PendulumCard::setType(const std::string input)
 {
 	MagicCard::setType(input);
 }
+
+bool PendulumCard::operator>(const Card& input)const
+{
+	if (this->rarity > input.getRarity())
+	{
+		return true;
+	}
+	return false;
+}
+bool PendulumCard::operator<(const Card& input)const
+{
+	if (this->rarity < input.getRarity())
+	{
+		return true;
+	}
+	return false;
+}
+
 std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card)
 {
 	std::string line;

@@ -14,7 +14,7 @@
 #include <sstream>
 #include <vector>
 
-MonsterCard::MonsterCard(std::string input_name, std::string input_effect, unsigned int input_attack, unsigned int input_defense):Card(input_name, input_effect)
+MonsterCard::MonsterCard(std::string input_name, std::string input_effect, unsigned int input_rarity, unsigned int input_attack, unsigned int input_defense):Card(input_name, input_effect, input_rarity)
 {
     this->attack = input_attack;
     this->defense = input_defense;
@@ -62,6 +62,23 @@ std::string MonsterCard::getInfo()const
     std::string result;
     result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->attack) + '|' + std::to_string(this->defense) + '\n';
     return result;
+}
+
+bool MonsterCard::operator>(const Card& input)const
+{
+    if (this->rarity > input.getRarity())
+    {
+        return true;
+    }
+    return false;
+}
+bool MonsterCard::operator<(const Card& input)const
+{
+    if (this->rarity < input.getRarity())
+    {
+        return true;
+    }
+    return false;
 }
 
 std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read)

@@ -11,7 +11,11 @@
 */
 #include "Card.hpp"
 
-Card::Card(std::string input_name, std::string input_effect):name(input_name),effect(input_effect)
+Card::Card(std::string input_name, std::string input_effect, unsigned int rarity):name(input_name),effect(input_effect),rarity(rarity)
 {
 
+}
+unsigned int Card::getRarity()const
+{
+	return this->rarity;
 }

@@ -26,7 +26,7 @@ class MagicCard :virtual public Card
 {
 public:
 	MagicCard() = default;
-	MagicCard(std::string input_name, std::string input_effect, CardType input_type);
+	MagicCard(std::string input_name, std::string input_effect,unsigned int input_rarity, CardType input_type);
 	std::string getName()const;
 	std::string getEffect()const;
 	std::string getStringType()const;
@@ -36,6 +36,8 @@ public:
 	void setEffect(std::string input);
 	void setType(std::string input);
 
+	bool operator>(const Card& input)const;
+	bool operator<(const Card& input)const;
 	friend std::ifstream& operator>>(std::ifstream& fin, MagicCard& card);
 protected:
 	CardType type;
