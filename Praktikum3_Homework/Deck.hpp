@@ -35,6 +35,9 @@ public:
 	std::vector<MonsterCard> getMonsterCards()const;
 	std::vector<MagicCard> getMagicCards()const;
 	std::vector<PendulumCard> getPendulumCards()const;
+
+	friend std::ifstream& operator>>(std::ifstream& fin, Deck deck);
+	friend std::ofstream& operator<<(std::ofstream& fout, Deck deck);
 private:
 	std::string name;
 	std::vector<MonsterCard> monstercards;

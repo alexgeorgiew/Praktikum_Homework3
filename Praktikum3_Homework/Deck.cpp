@@ -10,7 +10,7 @@
 * @compiler VC
 */
 #include "Deck.hpp"
-
+#include "MagicCard.hpp"
 Deck::Deck(std::string input_name, std::vector<MonsterCard> input_monsters, std::vector<MagicCard> input_magicians, std::vector<PendulumCard> input_pendulums)
 {
 	this->name = input_name;
@@ -100,4 +100,58 @@ std::vector<MagicCard> Deck::getMagicCards()const
 std::vector<PendulumCard> Deck::getPendulumCards()const
 {
 	return this->pendulumcards;
+}
+std::ifstream& operator>>(std::ifstream& fin, Deck deck)
+{
+	std::string line;
+	std::getline(fin, line);
+	std::stringstream stream(line);
+	std::string segments_of_line;
+	std::vector<std::string> info;
+
+	while (std::getline(stream, segments_of_line, '|'))             //get first line of the file separated on |
+	{
+		info.push_back(segments_of_line);
+	}
+	deck.setDeckname(info[0]);                               // we set new name for deck 
+	for (int i = 0; i < std::stoi(info[1]); i++)
+	{
+		MonsterCard current;
+		fin >> current;
+		deck.addMonsterCard(current);
+	}
+	for (int i = 0; i < std::stoi(info[2]); i++)
+	{
+		MagicCard current;
+		fin>> current;
+		deck.addMagicCard(current);
+	}
+	for (int i = 0; i < std::stoi(info[3]); i++)
+	{
+		PendulumCard current;
+		fin >> current;
+		deck.addPendulumCard(current);
+	}
+	
+	return fin;
+}
+std::ofstream& operator<<(std::ofstream& fout, Deck deck)
+{
+	fout << deck.getName() + '|' + std::to_string(deck.monsterCardsCount()) + '|' + std::to_string(deck.magicCardsCount()) + '|' + std::to_string(deck.pendulumCardsCount()) + '\n';
+	std::vector<MonsterCard> monsters = deck.getMonsterCards();
+	for (int i = 0; i < deck.monsterCardsCount(); i++)
+	{
+		fout << monsters[i];
+	}
+	std::vector<MagicCard> magicians = deck.getMagicCards();
+	for (int i = 0; i < deck.magicCardsCount(); i++)
+	{
+		fout << magicians[i];
+	}
+	std::vector<PendulumCard> pendulums = deck.getPendulumCards();
+	for (int i = 0; i < deck.pendulumCardsCount(); i++)
+	{
+		fout << pendulums[i];
+	}
+	return fout;
 }

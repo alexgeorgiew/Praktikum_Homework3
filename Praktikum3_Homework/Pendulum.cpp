@@ -110,3 +110,8 @@ std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card)
 	card.setType(info[5]);
 	return fin;
 }
+std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card)
+{
+	fout << card.getInfo();
+	return fout;
+}

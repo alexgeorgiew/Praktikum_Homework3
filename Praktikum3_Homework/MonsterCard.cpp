@@ -99,3 +99,9 @@ std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read)
     to_read.setDefensePoints(info[3]);
     return fin;
 }
+std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write)
+{
+    fout << to_write.getInfo();
+    return fout;
+}
+

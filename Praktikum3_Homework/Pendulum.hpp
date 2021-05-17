@@ -36,6 +36,7 @@ public:
 	bool operator<(const Card& input)const;
 
 	friend std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card);
+	friend std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card);
 private:
      unsigned int pendulumScale;
 };

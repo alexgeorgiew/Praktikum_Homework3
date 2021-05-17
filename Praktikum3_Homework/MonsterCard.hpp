@@ -33,6 +33,7 @@ public:
 	bool operator<(const Card& input)const;
 
 	friend std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read);
+	friend std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write);
 protected:
 	unsigned int attack, defense;
 };

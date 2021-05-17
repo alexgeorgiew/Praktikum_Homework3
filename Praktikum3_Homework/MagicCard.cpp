@@ -17,11 +17,11 @@ MagicCard::MagicCard(std::string input_name, std::string input_effect,unsigned i
 }
 std::string MagicCard::getName()const
 {
-	return Card::name;
+	return this->name;
 }
 std::string MagicCard::getEffect()const
 {
-	return Card::effect;
+	return this->effect;
 }
 std::string MagicCard::getStringType()const
 {
@@ -34,7 +34,6 @@ std::string MagicCard::getInfo()const
 	std::string result;
 	result = this->getName() + '|' + this->getEffect() + '|' + this->getStringType() + '\n';
 	return result;
-
 }
 void MagicCard::setName(std::string input)
 {
@@ -68,6 +67,11 @@ std::ifstream& operator>>(std::ifstream& fin, MagicCard& card)
     card.setType(info[2]);
 
 	return fin;
+}
+ std::ofstream& operator<<(std::ofstream& fout, MagicCard& card)
+{
+     fout << card.getInfo();
+     return fout;
 }
 
 bool MagicCard::operator>(const Card& input)const
