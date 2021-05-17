@@ -60,7 +60,7 @@ unsigned int  MonsterCard::getDefensePoints()const
 std::string MonsterCard::getInfo()const
 {
     std::string result;
-    result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->attack) + '|' + std::to_string(this->defense) + '\n';
+    result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->rarity) + '|' + std::to_string(this->attack) + '|' + std::to_string(this->defense) + '\n';
     return result;
 }
 
@@ -95,8 +95,9 @@ std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read)
     }
     to_read.setName(info[0]);
     to_read.setEffect(info[1]);
-    to_read.setAttackPoints(info[2]);
-    to_read.setDefensePoints(info[3]);
+    to_read.setRarity(std::stoi(info[2]));
+    to_read.setAttackPoints(info[3]);
+    to_read.setDefensePoints(info[4]);
     return fin;
 }
 std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write)

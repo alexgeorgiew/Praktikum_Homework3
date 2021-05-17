@@ -32,7 +32,7 @@ std::string MagicCard::getStringType()const
 std::string MagicCard::getInfo()const
 {
 	std::string result;
-	result = this->getName() + '|' + this->getEffect() + '|' + this->getStringType() + '\n';
+	result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->rarity) + '|' + this->getStringType() + '\n';
 	return result;
 }
 void MagicCard::setName(std::string input)
@@ -64,11 +64,12 @@ std::ifstream& operator>>(std::ifstream& fin, MagicCard& card)
 
     card.setName(info[0]);
     card.setEffect(info[1]);
-    card.setType(info[2]);
+    card.setRarity(std::stoi(info[2]));
+    card.setType(info[3]);
 
 	return fin;
 }
- std::ofstream& operator<<(std::ofstream& fout, MagicCard& card)
+ std::ofstream& operator<<(std::ofstream& fout,const MagicCard& card)
 {
      fout << card.getInfo();
      return fout;

@@ -19,3 +19,7 @@ unsigned int Card::getRarity()const
 {
 	return this->rarity;
 }
+void Card::setRarity(unsigned int input)
+{
+	this->rarity = input;
+}

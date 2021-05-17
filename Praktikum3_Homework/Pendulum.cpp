@@ -43,7 +43,7 @@ unsigned int PendulumCard::getPendulumScale()const
 std::string PendulumCard::getInfo()const
 {
 	std::string result;
-	result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->getAttackPoints()) + '|' + std::to_string(this->getDefensePoints()) + '|' + std::to_string(this->pendulumScale) + '|' + this->getStringType()+'\n';
+	result = this->getName() + '|' + this->getEffect() + '|' + std::to_string(this->rarity) + '|' + std::to_string(this->getAttackPoints()) + '|' + std::to_string(this->getDefensePoints()) + '|' + std::to_string(this->pendulumScale) + '|' + this->getStringType() + '\n';
 	return result;
 }
 void PendulumCard::setName(const std::string input)
@@ -104,10 +104,11 @@ std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card)
 
 	card.setName(info[0]);
 	card.setEffect(info[1]);
+	card.setRarity(std::stoi(info[2]));
 	card.setAttackPoints(info[2]);
-	card.setDefensePoints(info[3]);
-	card.setPendulumScale(info[4]);
-	card.setType(info[5]);
+	card.setDefensePoints(info[4]);
+	card.setPendulumScale(info[5]);
+	card.setType(info[6]);
 	return fin;
 }
 std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card)

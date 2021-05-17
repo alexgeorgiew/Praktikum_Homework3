@@ -39,7 +39,7 @@ public:
 	bool operator>(const Card& input)const;
 	bool operator<(const Card& input)const;
 	friend std::ifstream& operator>>(std::ifstream& fin, MagicCard& card);
-	friend std::ofstream& operator<<(std::ofstream& fout,MagicCard& card);
+	friend std::ofstream& operator<<(std::ofstream& fout,const MagicCard& card);
 protected:
 	CardType type;
 };
