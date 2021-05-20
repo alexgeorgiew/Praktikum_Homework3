@@ -13,7 +13,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
+#include <iostream>
 MonsterCard::MonsterCard(std::string input_name, std::string input_effect, unsigned int input_rarity, unsigned int input_attack, unsigned int input_defense):Card(input_name, input_effect, input_rarity)
 {
     this->attack = input_attack;
@@ -104,5 +104,9 @@ std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write)
 {
     fout << to_write.getInfo();
     return fout;
+}
+Card* MonsterCard::copy()const
+{
+    return new MonsterCard(*this);
 }
 

@@ -11,95 +11,134 @@
 */
 #include "Deck.hpp"
 #include "MagicCard.hpp"
-Deck::Deck(std::string input_name, std::vector<MonsterCard> input_monsters, std::vector<MagicCard> input_magicians, std::vector<PendulumCard> input_pendulums)
+#include <algorithm>
+#include <random>
+#include <iostream>
+Deck::Deck(std::string input_name)
 {
 	this->name = input_name;
-	this->monstercards = input_monsters;
-	this->magiccards = input_magicians;
-	this->pendulumcards = pendulumcards;
 }
+Deck::~Deck()
+{
+	Delete();
+}
+Deck& Deck::operator=(const Deck& input)
+{
+	if (this != &input)
+	{
+		this->Delete();
+		for (int i = 0; i < input.cards.size(); i++)
+		{
+			this->cards.push_back(input.cards[i]->copy());
+		}
+	}
+	return *this;
+}
+Deck::Deck(const Deck& input)
+{
+	for (int i = 0; i < input.cards.size(); i++)
+	{
+		this->cards.push_back(input.cards[i]->copy());
+	}
+}
+
 unsigned int Deck::monsterCardsCount() const
 {
-	return this->monstercards.size();
+	int result = 0;
+	for (int i = 0; i < this->cards.size(); i++)
+	{
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(cards[i]));
+		else if (MonsterCard* monster = dynamic_cast<MonsterCard*>(cards[i]))
+		{
+			result++;
+		}
+	}
+	return result;
 }
 unsigned int Deck::magicCardsCount() const
 {
-	return this->magiccards.size();
+	int result = 0;
+	for (int i = 0; i < this->cards.size(); i++)
+	{
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(cards[i]));
+		else if (MagicCard* monster = dynamic_cast<MagicCard*>(cards[i]))
+		{
+			result++;
+		}
+	}
+	return result;
 }
 unsigned int Deck::pendulumCardsCount() const
 {
-	return this->pendulumcards.size();
+	int result = 0;
+	for (int i = 0; i < this->cards.size(); i++)
+	{
+		if (PendulumCard* monster = dynamic_cast<PendulumCard*>(cards[i]))
+		{
+			result++;
+		}
+	}
+	return result;
 }
-void Deck::addMonsterCard(const MonsterCard& card)
+unsigned int Deck::allcardsCount()const
 {
-	this->monstercards.push_back(card);
+	return this->cards.size();
 }
-void Deck::addMagicCard(const MagicCard& card)
+
+void Deck::addCard(const Card* input)
 {
-	this->magiccards.push_back(card);
+	this->cards.push_back(input->copy());
 }
-void Deck::addPendulumCard(const PendulumCard& card)
+
+void Deck::setCard(unsigned int index, const Card* input)
 {
-	this->pendulumcards.push_back(card);
+	if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(cards[index]))
+	{
+	    if (const PendulumCard* card_input = dynamic_cast<const PendulumCard*>(input))
+	    {
+		  delete pendulum;
+		  this->cards[index] = input->copy();
+	    }
+	}
+	else if (MagicCard* magic = dynamic_cast<MagicCard*>(cards[index]))
+	{
+		if (const MagicCard* card_input = dynamic_cast<const MagicCard*>(input))
+		{
+		   delete magic;        //not sure!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		   this->cards[index] = input->copy();
+		}
+	}
+	else if (const MonsterCard* monster = dynamic_cast<const MonsterCard*>(cards[index]))
+	{
+		if (const MonsterCard* card_input = dynamic_cast<const MonsterCard*>(input))
+		{
+			delete monster;
+			this->cards[index] = input->copy();
+		}
+	}
 }
 void Deck::setDeckname(std::string input)
 {
 	this->name = input;
 }
-void Deck::setMonsterCard(const  unsigned int index,const MonsterCard& card)
-{
-	if (this->monstercards.size() > index)
-	{
-		this->monstercards[index] = card;
-	}
-	else
-	{
-		this->monstercards.push_back(card);
-	}
+
+void Deck::shuffle() {
+	auto rng = std::default_random_engine{};
+	std::shuffle(std::begin(this->cards), std::end(this->cards), rng);
 }
-void Deck::setMagicCard(const  unsigned int index, const MagicCard& card)
-{
-	if (this->magiccards.size() > index)
-	{
-		this->magiccards[index] = card;
-	}
-	else
-	{
-		this->magiccards.push_back(card);
-	}
-}
-void Deck::setPendulumCard(const  unsigned int index, const PendulumCard& card)
-{
-	if (this->pendulumcards.size() > index)
-	{
-		this->pendulumcards[index] = card;
-	}
-	else
-	{
-		this->pendulumcards.push_back(card);
-	}
-}
+
 void Deck::Delete()
 {
-	this->magiccards.clear();
-	this->monstercards.clear();
-	this->pendulumcards.clear();
+	for (auto card : cards)
+	{
+		delete card;
+	}
+     this->cards.clear();
 }
+
 std::string Deck::getName()const
 {
 	return this->name;
-}
-std::vector<MonsterCard> Deck::getMonsterCards()const
-{
-	return this->monstercards;
-}
-std::vector<MagicCard> Deck::getMagicCards()const
-{
-	return this->magiccards;
-}
-std::vector<PendulumCard> Deck::getPendulumCards()const
-{
-	return this->pendulumcards;
 }
 std::ifstream& operator>>(std::ifstream& fin, Deck deck)
 {
@@ -118,40 +157,58 @@ std::ifstream& operator>>(std::ifstream& fin, Deck deck)
 	{
 		MonsterCard current;
 		fin >> current;
-		deck.addMonsterCard(current);
+		deck.addCard(&current);
 	}
 	for (int i = 0; i < std::stoi(info[2]); i++)
 	{
 		MagicCard current;
 		fin>> current;
-		deck.addMagicCard(current);
+		deck.addCard(&current);
 	}
 	for (int i = 0; i < std::stoi(info[3]); i++)
 	{
 		PendulumCard current;
 		fin >> current;
-		deck.addPendulumCard(current);
+		deck.addCard(&current);
 	}
-	
 	return fin;
 }
-std::ofstream& operator<<(std::ofstream& fout, Deck deck)
+std::ofstream& operator<<(std::ofstream& fout,Deck& deck)
 {
 	fout << deck.getName() + '|' + std::to_string(deck.monsterCardsCount()) + '|' + std::to_string(deck.magicCardsCount()) + '|' + std::to_string(deck.pendulumCardsCount()) + '\n';
-	std::vector<MonsterCard> monsters = deck.getMonsterCards();
-	for (int i = 0; i < deck.monsterCardsCount(); i++)
+	
+	for (int i = 0; i < deck.allcardsCount(); i++)
 	{
-		fout << monsters[i];
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(deck[i]));
+		else
+		{
+			if (MonsterCard* monster = dynamic_cast<MonsterCard*>(deck[i]))
+			{
+				fout << monster->getInfo();
+			}
+		}
+	}	
+	for (int i = 0; i < deck.allcardsCount(); i++)
+	{
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(deck[i]));
+		else
+		{
+			if (MagicCard* magic = dynamic_cast<MagicCard*>(deck[i]))
+			{
+				fout << magic->getInfo();
+			}
+		}
 	}
-	std::vector<MagicCard> magicians = deck.getMagicCards();
-	for (int i = 0; i < deck.magicCardsCount(); i++)
+	for (int i = 0; i < deck.allcardsCount(); i++)
 	{
-		fout << magicians[i];
-	}
-	std::vector<PendulumCard> pendulums = deck.getPendulumCards();
-	for (int i = 0; i < deck.pendulumCardsCount(); i++)
-	{
-		fout << pendulums[i];
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(deck[i]))
+		{
+			fout << pendulum->getInfo();
+		}
 	}
 	return fout;
+}
+Card* Deck::operator[](const unsigned index)const
+{
+	return this->cards[index];
 }

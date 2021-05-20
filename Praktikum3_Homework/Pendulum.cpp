@@ -10,7 +10,7 @@
 * @compiler VC
 */
 #include "Pendulum.hpp"
-
+#include <iostream>
 PendulumCard::PendulumCard(std::string input_name, std::string input_effect, unsigned int input_rarity, unsigned int input_attack, unsigned int input_defense, unsigned int input_pendulumScale, CardType input_type)
 	:Card(input_name, input_effect, input_attack),MagicCard(input_name, input_effect, input_attack, input_type),MonsterCard(input_name, input_effect, input_attack, input_attack, input_defense)
 {
@@ -115,4 +115,8 @@ std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card)
 {
 	fout << card.getInfo();
 	return fout;
+}
+Card* PendulumCard::copy()const
+{
+	return new PendulumCard(*this);	
 }

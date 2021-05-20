@@ -17,30 +17,30 @@
 class Deck {
 public:
 	Deck() = default;
-	Deck(std::string input_name, std::vector<MonsterCard> input_monsters, std::vector<MagicCard> input_magicians, std::vector<PendulumCard> input_pendulums);
-
+	Deck(std::string input_name);  //add vector
+	~Deck();
+	Deck(const Deck& input);
 	unsigned int monsterCardsCount() const;
 	unsigned int magicCardsCount() const;
 	unsigned int pendulumCardsCount() const;
-	void addMonsterCard(const MonsterCard& card);
-	void addMagicCard(const MagicCard& card);
-	void addPendulumCard(const PendulumCard& card);
+	unsigned int allcardsCount()const;
+	void addCard(const Card* input);
+	void setCard(unsigned int index,const Card* input);
+	void shuffle();
 	void setDeckname(const std::string input);
-	void setMonsterCard(const unsigned int index,const MonsterCard& card);
-	void setMagicCard(const unsigned int index,const MagicCard& card);
-	void setPendulumCard(const unsigned int index,const PendulumCard& card);
 	void Delete();
-
 	std::string getName()const;
-	std::vector<MonsterCard> getMonsterCards()const;
-	std::vector<MagicCard> getMagicCards()const;
-	std::vector<PendulumCard> getPendulumCards()const;
-
 	friend std::ifstream& operator>>(std::ifstream& fin, Deck deck);
-	friend std::ofstream& operator<<(std::ofstream& fout, Deck deck);
+	friend std::ofstream& operator<<(std::ofstream& fout, Deck& deck);
+	Deck& operator=(const Deck& input);
+	Card* operator[](const unsigned index)const;
+
+
+	
+
 private:
+
+
 	std::string name;
-	std::vector<MonsterCard> monstercards;
-	std::vector<MagicCard> magiccards;
-	std::vector<PendulumCard> pendulumcards;
+	std::vector<Card*> cards;
 };

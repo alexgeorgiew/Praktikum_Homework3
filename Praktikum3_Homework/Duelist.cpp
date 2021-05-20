@@ -26,20 +26,34 @@ bool Duelist::saveDeck(const std::string filename)const
 	if (file.is_open())
 	{
 		file << this->deck.getName() + '|' + std::to_string(this->deck.monsterCardsCount()) + '|' + std::to_string(this->deck.magicCardsCount()) + '|' + std::to_string(this->deck.pendulumCardsCount()) + '\n';
-		std::vector<MonsterCard> monsters = this->deck.getMonsterCards();
-		for (int i = 0; i < this->deck.monsterCardsCount(); i++)
+		for (int i = 0; i < this->deck.allcardsCount(); i++)
 		{
-			file << monsters[i].getInfo();
+			if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]));
+			else
+			{
+				if (MonsterCard* monster = dynamic_cast<MonsterCard*>(this->deck[i]))
+				{
+					file << monster->getInfo();
+				}
+			}
 		}
-		std::vector<MagicCard> magicians = this->deck.getMagicCards();
-		for (int i = 0; i < this->deck.magicCardsCount(); i++)
+		for (int i = 0; i < this->deck.allcardsCount(); i++)
 		{
-			file << magicians[i].getInfo();
+			if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]));
+			else
+			{
+				if (MagicCard* magic = dynamic_cast<MagicCard*>(this->deck[i]))
+				{
+					file << magic->getInfo();
+				}
+			}
 		}
-		std::vector<PendulumCard> pendulums = this->deck.getPendulumCards();
-		for (int i = 0; i < this->deck.pendulumCardsCount(); i++)
+		for (int i = 0; i < this->deck.allcardsCount(); i++)
 		{
-			file << pendulums[i].getInfo();
+			if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]))
+			{
+				file << pendulum->getInfo();
+			}
 		}
 		file.close();
 		return true;
@@ -71,19 +85,21 @@ bool Duelist::loadDeck(const std::string filename)
 			{
 				MonsterCard current;
 				file >> current;
-				this->deck.addMonsterCard(current);
+				this->deck.addCard(&current);
 			}
 			for (int i = 0; i < std::stoi(info[2]); i++)
 			{
 				MagicCard current;
 				file >> current;
-				this->deck.addMagicCard(current);
+				this->deck.addCard(&current);
+			   
 			}
 			for (int i = 0; i < std::stoi(info[3]); i++)
 			{
 				PendulumCard current;
 				file >> current;
-				this->deck.addPendulumCard(current);
+				this->deck.addCard(&current);
+		
 			}
 			file.close();
 			return true;
@@ -97,19 +113,65 @@ bool Duelist::loadDeck(const std::string filename)
 void Duelist::display()const
 {
 	std::cout << this->deck.getName() + '|' + std::to_string(this->deck.monsterCardsCount()) + '|' + std::to_string(this->deck.magicCardsCount()) + '|' + std::to_string(this->deck.pendulumCardsCount()) + '\n';
-	std::vector<MonsterCard> monsters = this->deck.getMonsterCards();
-	for (int i = 0; i < this->deck.monsterCardsCount(); i++)
+
+	for (int i = 0; i < this->deck.allcardsCount(); i++)
 	{
-		std::cout << monsters[i].getInfo();
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]));
+		else
+		{
+			if (MonsterCard* monster = dynamic_cast<MonsterCard*>(this->deck[i]))
+			{
+				std::cout << i;
+				std::cout << monster->getInfo();
+			}
+		}
 	}
-	std::vector<MagicCard> magicians = this->deck.getMagicCards();
-	for (int i = 0; i < this->deck.magicCardsCount(); i++)
+	for (int i = 0; i < this->deck.allcardsCount(); i++)
 	{
-		std::cout << magicians[i].getInfo();
+		if (PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]));
+		else
+		{
+			if (MagicCard* magic = dynamic_cast<MagicCard*>(this->deck[i]))
+			{
+				std::cout << i;
+				std::cout << magic->getInfo();
+			}
+		}
 	}
-	std::vector<PendulumCard> pendulums = this->deck.getPendulumCards();
-	for (int i = 0; i < this->deck.pendulumCardsCount(); i++)
+	for (int i = 0; i < this->deck.allcardsCount(); i++)
 	{
-		std::cout << pendulums[i].getInfo();
+		if(PendulumCard* pendulum = dynamic_cast<PendulumCard*>(this->deck[i]))
+		{
+			std::cout << i;
+			std::cout << pendulum->getInfo();
+		}
+	}
+}
+ResultFight Duelist::duel(Duelist& second_duelist)
+{
+	if (this->deck.allcardsCount() == second_duelist.getDeck().allcardsCount())
+	{
+		unsigned int points_first = 0, points_second = 0;
+		second_duelist.getDeck().shuffle();
+		this->getDeck().shuffle();
+		for (int i = 0; i < this->getDeck().allcardsCount(); i++)
+		{
+			if (this->getDeck()[i] > second_duelist.getDeck()[i])
+			{
+				points_first++;
+			}
+			else if (this->getDeck()[i] < second_duelist.getDeck()[i])
+			{
+				points_second++;
+			}
+		}
+
+		if (points_first == points_second)return ResultFight::remi;
+		else if (points_first > points_second)return ResultFight::win_first;
+		return win_second;
+	}
+	else
+	{
+		return ResultFight::can_not_start;
 	}
 }

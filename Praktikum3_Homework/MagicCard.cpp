@@ -91,3 +91,7 @@ bool MagicCard::operator<(const Card& input)const
     }
     return false;
 }
+Card* MagicCard::copy() const
+{
+    return new MagicCard(*this);
+}

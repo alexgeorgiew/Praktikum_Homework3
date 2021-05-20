@@ -37,6 +37,7 @@ public:
 
 	friend std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card);
 	friend std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card);
+	Card* copy()const;
 private:
      unsigned int pendulumScale;
 };

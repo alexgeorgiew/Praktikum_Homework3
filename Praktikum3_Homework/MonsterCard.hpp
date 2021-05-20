@@ -34,6 +34,7 @@ public:
 
 	friend std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read);
 	friend std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write);
+	Card* copy()const;
 protected:
 	unsigned int attack, defense;
 };

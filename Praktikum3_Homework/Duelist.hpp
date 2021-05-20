@@ -12,6 +12,14 @@
 #pragma once
 #include "Deck.hpp"
 #include <string>
+
+enum ResultFight {
+	 can_not_start = 0,
+     win_first = 1,
+     win_second = 2,
+     remi = 3,
+};
+
 class Duelist {
 public:
 	Duelist() = default;
@@ -20,6 +28,7 @@ public:
 	Deck& getDeck();
 	bool saveDeck(const std::string filename)const;
 	bool loadDeck(const std::string filename);
+	ResultFight duel(Duelist& second_duelist);
 	void display()const;
 private:
 	std::string name;
