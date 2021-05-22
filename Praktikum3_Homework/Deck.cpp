@@ -140,7 +140,7 @@ std::string Deck::getName()const
 {
 	return this->name;
 }
-std::ifstream& operator>>(std::ifstream& fin, Deck deck)
+std::ifstream& operator>>(std::ifstream& fin, Deck& deck)
 {
 	std::string line;
 	std::getline(fin, line);
@@ -211,4 +211,9 @@ std::ofstream& operator<<(std::ofstream& fout,Deck& deck)
 Card* Deck::operator[](const unsigned index)const
 {
 	return this->cards[index];
+}
+
+std::vector<Card*> Deck::getCards()const
+{
+	return this->cards;
 }

@@ -20,6 +20,12 @@ Deck& Duelist::getDeck()
 {
 	return this->deck;
 }
+
+std::string Duelist::getName()const
+{
+	return this->name;
+}
+
 bool Duelist::saveDeck(const std::string filename)const
 {
 	std::ofstream file(filename, std::ios::out);
@@ -64,6 +70,7 @@ bool Duelist::saveDeck(const std::string filename)const
 		return false;
 	}
 }
+
 bool Duelist::loadDeck(const std::string filename)
 {
 	this->deck.Delete();
@@ -110,6 +117,7 @@ bool Duelist::loadDeck(const std::string filename)
 			return false;
 		}
 }
+
 void Duelist::display()const
 {
 	std::cout << this->deck.getName() + '|' + std::to_string(this->deck.monsterCardsCount()) + '|' + std::to_string(this->deck.magicCardsCount()) + '|' + std::to_string(this->deck.pendulumCardsCount()) + '\n';
@@ -147,6 +155,7 @@ void Duelist::display()const
 		}
 	}
 }
+
 ResultFight Duelist::duel(Duelist& second_duelist)
 {
 	if (this->deck.allcardsCount() == second_duelist.getDeck().allcardsCount())
@@ -156,16 +165,16 @@ ResultFight Duelist::duel(Duelist& second_duelist)
 		this->getDeck().shuffle();
 		for (int i = 0; i < this->getDeck().allcardsCount(); i++)
 		{
-			if (this->getDeck()[i] > second_duelist.getDeck()[i])
+			if (*(this->getDeck()[i]) > *(second_duelist.getDeck()[i]))
 			{
 				points_first++;
+				
 			}
-			else if (this->getDeck()[i] < second_duelist.getDeck()[i])
+			else if (*(this->getDeck()[i]) < *(second_duelist.getDeck()[i]))
 			{
 				points_second++;
 			}
 		}
-
 		if (points_first == points_second)return ResultFight::remi;
 		else if (points_first > points_second)return ResultFight::win_first;
 		return win_second;

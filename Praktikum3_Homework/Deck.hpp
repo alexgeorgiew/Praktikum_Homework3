@@ -18,8 +18,10 @@ class Deck {
 public:
 	Deck() = default;
 	Deck(std::string input_name);  //add vector
-	~Deck();
 	Deck(const Deck& input);
+	~Deck();
+	Deck& operator=(const Deck& input);
+	Card* operator[](const unsigned index)const;
 	unsigned int monsterCardsCount() const;
 	unsigned int magicCardsCount() const;
 	unsigned int pendulumCardsCount() const;
@@ -29,18 +31,13 @@ public:
 	void shuffle();
 	void setDeckname(const std::string input);
 	void Delete();
+
+	std::vector<Card*> getCards()const;
 	std::string getName()const;
-	friend std::ifstream& operator>>(std::ifstream& fin, Deck deck);
+
+	friend std::ifstream& operator>>(std::ifstream& fin, Deck& deck);
 	friend std::ofstream& operator<<(std::ofstream& fout, Deck& deck);
-	Deck& operator=(const Deck& input);
-	Card* operator[](const unsigned index)const;
-
-
-	
-
 private:
-
-
 	std::string name;
 	std::vector<Card*> cards;
 };

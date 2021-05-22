@@ -72,23 +72,6 @@ void PendulumCard::setType(const std::string input)
 	MagicCard::setType(input);
 }
 
-bool PendulumCard::operator>(const Card& input)const
-{
-	if (this->rarity > input.getRarity())
-	{
-		return true;
-	}
-	return false;
-}
-bool PendulumCard::operator<(const Card& input)const
-{
-	if (this->rarity < input.getRarity())
-	{
-		return true;
-	}
-	return false;
-}
-
 std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card)
 {
 	std::string line;

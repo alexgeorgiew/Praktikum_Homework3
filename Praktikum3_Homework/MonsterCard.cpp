@@ -64,23 +64,6 @@ std::string MonsterCard::getInfo()const
     return result;
 }
 
-bool MonsterCard::operator>(const Card& input)const
-{
-    if (this->rarity > input.getRarity())
-    {
-        return true;
-    }
-    return false;
-}
-bool MonsterCard::operator<(const Card& input)const
-{
-    if (this->rarity < input.getRarity())
-    {
-        return true;
-    }
-    return false;
-}
-
 std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read)
 {
     std::string line;

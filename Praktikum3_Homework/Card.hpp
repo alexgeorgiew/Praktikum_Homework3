@@ -15,8 +15,8 @@ class Card {
 public:
 	Card() = default;
 	Card(std::string input_name, std::string input_effect,unsigned int rarity);
-	virtual bool operator>(const Card& input)const = 0;
-	virtual bool operator<(const Card& input)const = 0;
+	virtual bool operator>(const Card& input);
+	virtual bool operator<(const Card& input);
 	virtual Card* copy()const = 0;
 	virtual ~Card() = default;
 	void setRarity(unsigned int input);

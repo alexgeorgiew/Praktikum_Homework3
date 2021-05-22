@@ -26,6 +26,7 @@ public:
 	Duelist(std::string input_name);
 
 	Deck& getDeck();
+	std::string getName()const;
 	bool saveDeck(const std::string filename)const;
 	bool loadDeck(const std::string filename);
 	ResultFight duel(Duelist& second_duelist);

@@ -75,22 +75,6 @@ std::ifstream& operator>>(std::ifstream& fin, MagicCard& card)
      return fout;
 }
 
-bool MagicCard::operator>(const Card& input)const
-{
-    if (this->rarity > input.getRarity())
-    {
-        return true;
-    }
-    return false;
-}
-bool MagicCard::operator<(const Card& input)const
-{
-    if (this->rarity < input.getRarity())
-    {
-        return true;
-    }
-    return false;
-}
 Card* MagicCard::copy() const
 {
     return new MagicCard(*this);

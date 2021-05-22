@@ -32,9 +32,6 @@ public:
 	void setPendulumScale(const std::string input);
 	void setType(const std::string input);
 
-	bool operator>(const Card& input)const;
-	bool operator<(const Card& input)const;
-
 	friend std::ifstream& operator>>(std::ifstream& fin, PendulumCard& card);
 	friend std::ofstream& operator<<(std::ofstream& fout,const PendulumCard& card);
 	Card* copy()const;

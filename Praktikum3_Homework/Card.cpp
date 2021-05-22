@@ -23,3 +23,13 @@ void Card::setRarity(unsigned int input)
 {
 	this->rarity = input;
 }
+bool Card::operator>(const Card& input)
+{
+	if (this->rarity > input.getRarity())return true;
+	return false;
+}
+bool Card::operator<(const Card& input)
+{
+	if (this->rarity < input.getRarity())return true;
+	return false;
+}

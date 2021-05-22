@@ -29,9 +29,6 @@ public:
 	unsigned int getDefensePoints()const;
 	std::string getInfo()const;            //gives all information about card
 
-	bool operator>(const Card& input)const;
-	bool operator<(const Card& input)const;
-
 	friend std::ifstream& operator>>(std::ifstream& fin, MonsterCard& to_read);
 	friend std::ofstream& operator<<(std::ofstream& fout,const MonsterCard& to_write);
 	Card* copy()const;

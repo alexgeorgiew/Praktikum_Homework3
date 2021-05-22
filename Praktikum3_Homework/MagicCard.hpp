@@ -36,8 +36,6 @@ public:
 	void setEffect(std::string input);
 	void setType(std::string input);
 
-	bool operator>(const Card& input)const;
-	bool operator<(const Card& input)const;
 	friend std::ifstream& operator>>(std::ifstream& fin, MagicCard& card);
 	friend std::ofstream& operator<<(std::ofstream& fout,const MagicCard& card);
 	Card* copy() const;
